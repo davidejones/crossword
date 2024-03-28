@@ -119,7 +119,6 @@ class Puzzle:
             # add new char
             self.puzzle_canvas.create_text(coords[0] + 25, coords[1] + 25, text=event.char.upper(), fill="black", font='Arial 14 bold', tags=f'char_{coords[0]}_{coords[1]}')
             self.increment_active(item)
-        self.check_win_conditions()
 
     def clear_active(self):
         # clear existing active tags

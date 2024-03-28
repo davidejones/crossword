@@ -154,8 +154,8 @@ class CrosswordApp(Tk):
 
     def __init__(self, screenName=None, baseName=None, className='Tk', useTk=1, sync=0, use=None):
         """
-        Thank you to linguapress for permission to use their crossword puzzle and clues which can be found here
-        https://linguapress.com/puzzles/weather-crossword.htm
+        Thank you to linguapress for permission to use their crossword puzzle and clues.
+        More puzzles can be found here https://linguapress.com/puzzles/
         """
         super().__init__(screenName, baseName, className, useTk, sync, use)
         self.minsize(1024, 718)

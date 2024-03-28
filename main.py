@@ -114,11 +114,12 @@ class Puzzle:
         for item in self.puzzle_canvas.find_withtag('active'):
             coords = self.puzzle_canvas.coords(item)
             # clear old char
-            for item in self.puzzle_canvas.find_withtag(f'char_{coords[0]}_{coords[1]}'):
-                self.puzzle_canvas.delete(item)
+            for char_item in self.puzzle_canvas.find_withtag(f'char_{coords[0]}_{coords[1]}'):
+                self.puzzle_canvas.delete(char_item)
             # add new char
             self.puzzle_canvas.create_text(coords[0] + 25, coords[1] + 25, text=event.char.upper(), fill="black", font='Arial 14 bold', tags=f'char_{coords[0]}_{coords[1]}')
-            self.clear_active()
+            self.increment_active(item)
+        self.check_win_conditions()
 
     def clear_active(self):
         # clear existing active tags
@@ -134,6 +135,21 @@ class Puzzle:
         tags += ('active',)
         self.puzzle_canvas.itemconfig(obj, tags=tags)
         self.puzzle_canvas.itemconfig(obj, fill="#ADD8E6")
+
+    def increment_active(self, item):
+        rect_tag = ''
+        item_tags = self.puzzle_canvas.gettags(item)
+        rect_tags = list(filter(lambda x: x.startswith('rect_'), item_tags))
+        rect_tag = rect_tags[0] if rect_tags else ''
+        self.clear_active()
+        if rect_tag:
+            _, x, y = rect_tag.split('_')
+            next = self.puzzle_canvas.find_withtag(f'rect_{int(x) + 1}_{y}')
+            if "word" not in self.puzzle_canvas.gettags(next):
+                next = None
+            if next:
+                self.set_active(next)
+
 
 class CrosswordApp(Tk):
 
